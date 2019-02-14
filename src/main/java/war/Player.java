@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class Player <Card> {
+public class Player {
     private Queue<Card> cards = new ArrayBlockingQueue<Card>(52);
 
     public void consumeWarPile(ArrayList<Card> warPile){

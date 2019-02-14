@@ -4,20 +4,20 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private static Player<Card> player1;
-    private static Player<Card> player2;
+    private static Player player1;
+    private static Player player2;
 
     private static ArrayList<Card> warPile = new ArrayList<>();
 
     // MAIN METHOD 
     public static void main(String[] args){
     
-        Deck<Card> deck = new Deck<Card>(Game.createDeck());
+        Deck deck = new Deck(Game.createDeck());
         
         deck.shuffle();
 
-        player1 = new Player<Card>();
-        player2 = new Player<Card>();
+        player1 = new Player();
+        player2 = new Player();
 
         // deal cards
         deck.deal(player1, player2);
