@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private static Player player1;
-    private static Player player2;
+    private static Player player1 = new Player();
+    private static Player player2 = new Player();
 
     private static ArrayList<Card> warPile = new ArrayList<>();
 
@@ -15,9 +15,6 @@ public class Game {
         Deck deck = new Deck(Game.createDeck());
         
         deck.shuffle();
-
-        player1 = new Player();
-        player2 = new Player();
 
         // deal cards
         deck.deal(player1, player2);
