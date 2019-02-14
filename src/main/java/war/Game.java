@@ -19,16 +19,18 @@ public class Game {
         // deal cards
         deck.deal(player1, player2);
 
-        System.out.println("--------------------GAME START---------------------");
+        System.out.println("----------------------GAME START-----------------------");
 
         // game start! 
         while (player1.cardsLeft() > 0 && player2.cardsLeft() > 0){
-            System.out.println("----------------------------------------------------------");
-            System.out.println("PLAYER 1 HAS " + player1.cardsLeft() + " :: " + "PLAYER 2 HAS " + player2.cardsLeft());
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("Player 1: " + player1.cardsLeft() + " left -- " + "Player 2: " + player2.cardsLeft() + " left");
+            System.out.println();
             Game.flip();
         }
 
-        System.out.println("--------------------GAME END---------------------");
+        System.out.println();
+        System.out.println("-------------------------GAME END-------------------------");
 
         if (player1.cardsLeft() == 0){
             System.out.println("PLAYER 2 WINS");
@@ -62,7 +64,7 @@ public class Game {
         Card first = player1.flip();
         Card second = player2.flip();
 
-        System.out.println("PLAYER 1: " + first.toString() + " vs PLAYER 2: " + second.toString());
+        System.out.println("Player 1 flips " + first.toString() + " -- " + "Player 2 flips " + second.toString());
         warPile.add(first);
         warPile.add(second);
 
