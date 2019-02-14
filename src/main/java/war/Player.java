@@ -1,4 +1,4 @@
-package main.java.war;
+package war;
 
 import java.util.ArrayList;
 import java.util.Queue;

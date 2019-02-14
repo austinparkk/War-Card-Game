@@ -1,8 +1,7 @@
-package main.java.war;
+package war;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Queue;
 
 
 public class Deck <Card> {

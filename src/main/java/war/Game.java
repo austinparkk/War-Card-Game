@@ -1,9 +1,6 @@
-package main.java.war;
+package war;
 
-import java.util.Queue;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.concurrent.ArrayBlockingQueue;
 
 public class Game {
 

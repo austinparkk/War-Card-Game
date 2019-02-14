@@ -1,4 +1,4 @@
-package main.java.war;
+package war;
 
 public class Card {
     private Suit suit;
