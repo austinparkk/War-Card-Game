@@ -1,28 +1,32 @@
 package main.java.war;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Queue;
 
 
 public class Deck <Card> {
-    private Queue<Card> deck;
+    private ArrayList<Card> deck = new ArrayList<>();
 
-    public Deck(Queue<Card> deck){
+    public Deck(ArrayList<Card> deck){
         this.deck = deck;
     }
 
-    public Card getNextCard(){
-        return deck.remove();
+    public Boolean shuffle(){
+        Collections.shuffle(deck);
+        return true;
     }
 
-    public Boolean addToBottom(Card card){
-        return deck.add(card);
+    // deal so that player1 and player2 have the same amount of cards.
+    // may be 1 undealt card if the deck has a odd number of cards. 
+    public void deal(Player player1, Player player2){
+        int i = 0;
+        // must be atleast 2 cards left. hence < deck.size()-1
+        while (i < deck.size() - 1){
+            player1.addCard(deck.get(i));
+            player2.addCard(deck.get(i+1));
+            
+            i = i + 2;
+        }
     }
-
-    public Boolean isEmpty(){
-        return deck.isEmpty();
-    }
-
-
-
 }

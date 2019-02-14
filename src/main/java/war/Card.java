@@ -16,4 +16,10 @@ public class Card {
     public Rank getRank(){
         return rank;
     }
+
+    @Override
+    public String toString(){
+        String str = getRank() + " of " + getSuit();
+        return str;
+    }
 }

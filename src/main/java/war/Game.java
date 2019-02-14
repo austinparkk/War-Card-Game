@@ -6,50 +6,116 @@ import java.util.Collections;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Game {
+
+    private static Player<Card> player1;
+    private static Player<Card> player2;
+
+    private static ArrayList<Card> warPile = new ArrayList<>();
+
+    // MAIN METHOD 
     public static void main(String[] args){
     
-        ArrayList<Card> cards = new ArrayList<Card>(52);
-        Queue<Card> player1 = new ArrayBlockingQueue<Card>(52);
-        Queue<Card> player2 = new ArrayBlockingQueue<Card>(52);
+        Deck deck = new Deck(Game.createDeck());
+        
+        //shuffle twice for more randomness. 
+        deck.shuffle();
+        deck.shuffle();
 
-        // create the deck
+        player1 = new Player<Card>();
+        player2 = new Player<Card>();
+
+        // deal cards
+        deck.deal(player1, player2);
+
+        // game start! 
+        while (player1.cardsLeft() > 0 && player2.cardsLeft() > 0){
+            System.out.println("----------------------------------------------------------");
+            System.out.println("PLAYER 1 HAS " + player1.cardsLeft() + " :: " + "PLAYER 2 HAS " + player2.cardsLeft());
+            Game.flip();
+        }
+
+        if (player1.cardsLeft() == 0){
+            System.out.println("PLAYER 2 WINS");
+        } else {
+            System.out.println("PLAYER 1 WINS");
+        }
+    }
+
+ // --------------------------- HELPER FUNCTIONS -------------------------------
+
+ // creates a standard deck of 52 cards
+    public static ArrayList<Card> createDeck(){
+        ArrayList<Card> standardDeck = new ArrayList<Card>(52);
+    
         for (int i = 1; i < 14; i++){
             Card heart = new Card(Suit.HEART, Rank.getRank(i));
             Card diamond = new Card(Suit.DIAMOND, Rank.getRank(i));
             Card spade = new Card(Suit.SPADE, Rank.getRank(i));
             Card club = new Card(Suit.CLUB, Rank.getRank(i));
 
-            cards.add(heart);
-            cards.add(diamond);
-            cards.add(spade);
-            cards.add(club);
+            standardDeck.add(heart);
+            standardDeck.add(diamond);
+            standardDeck.add(spade);
+            standardDeck.add(club);
         }
 
-        Collections.shuffle(cards);
-
-        Queue<Card> cardsQueue = new ArrayBlockingQueue<Card>(52);
-
-        for (Card c: cards){
-            cardsQueue.add(c);
-        }
-
-        Deck<Card> deck = new Deck(cardsQueue);
-        
-        // deal cards
-        while (!deck.isEmpty()){
-            player1.add(deck.getNextCard());
-            player2.add(deck.getNextCard());
-        }
-
-        Deck<Card> p1_deck = new Deck(player1);
-        Deck<Card> p2_deck = new Deck(player2);
-
-        while (!p1_deck.isEmpty()){
-            Card c = p1_deck.getNextCard();
-            Card c2 = p2_deck.getNextCard();
-
-            System.out.println(c.getRank() + " of " + c.getSuit() + " vs " + c2.getRank() + " of " + c2.getSuit());
-
-        }
+        return standardDeck;
     }
+
+    public static void flip(){
+        Card first = player1.flip();
+        Card second = player2.flip();
+
+        System.out.println("PLAYER 1: " + first.toString() + " vs PLAYER 2: " + second.toString());
+        warPile.add(first);
+        warPile.add(second);
+
+        if (first.getRank().getValue() > second.getRank().getValue()){
+            player1.consumeWarPile(warPile);
+            System.out.println("PLAYER 1 WINS THE ROUND");
+
+        } else if (first.getRank().getValue() < second.getRank().getValue()){
+            System.out.println("PLAYER 2 WINS THE ROUND");
+            player2.consumeWarPile(warPile);
+        } else if (first.getRank().getValue() == second.getRank().getValue()){
+            Game.declareWar();
+        }
+        warPile.clear();
+    }
+
+    // War happens when there are ties. Each player burns 3 cards then go to war with the 4th.
+    // if a player does not have enough cards to go to war, they lose. 
+    public static void declareWar(){
+        System.out.println("TIE! A WAR WILL START ");
+
+        // check that both players have enough cards to declare war. 
+        if (player1.cardsLeft() < 5){
+            player1.clearCards();
+            player2.consumeWarPile(warPile);
+            System.out.println();
+            System.out.println("PLAYER 1 CANNOT AFFORD A WAR");
+            return;
+        } else if (player2.cardsLeft() < 5){
+            player2.clearCards();
+            player1.consumeWarPile(warPile);
+            System.out.println();
+            System.out.println("PLAYER 2 CANNOT AFFORD A WAR");
+            return;
+        }
+
+        System.out.println();
+        System.out.println("---------- WAR START ----------");
+
+        // add three cards to warPile
+        for (int i = 0; i < 3; i++){
+            warPile.add(player1.flip());
+            warPile.add(player2.flip());
+        }
+
+
+        Game.flip();
+        System.out.println("---------- WAR END ------------");
+        System.out.println();
+    }
+
 }
