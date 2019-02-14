@@ -11,21 +11,23 @@ public class Game {
 
     // MAIN METHOD 
     public static void main(String[] args){
-    
+        // create a standard deck and shuffle before dealing
         Deck deck = new Deck(Game.createDeck());
-        
         deck.shuffle();
 
         // deal cards
         deck.deal(player1, player2);
 
-        System.out.println("----------------------GAME START-----------------------");
-
-        // game start! 
+        // game starts
+        System.out.println("------------------------GAME START------------------------");
+        
         while (player1.cardsLeft() > 0 && player2.cardsLeft() > 0){
+            // print score before each round
             System.out.println("-----------------------------------------------------------");
             System.out.println("Player 1: " + player1.cardsLeft() + " left -- " + "Player 2: " + player2.cardsLeft() + " left");
             System.out.println();
+
+            // flip next card
             Game.flip();
         }
 
@@ -41,7 +43,7 @@ public class Game {
 
  // --------------------------- HELPER FUNCTIONS -------------------------------
 
- // creates a standard deck of 52 cards
+    // creates a standard deck of 52 cards
     public static ArrayList<Card> createDeck(){
         ArrayList<Card> standardDeck = new ArrayList<Card>(52);
     
@@ -60,6 +62,7 @@ public class Game {
         return standardDeck;
     }
 
+    // Each player flips a card, the higher card wins and takes the pile. If its a tie, a war breaks out. 
     public static void flip(){
         Card first = player1.flip();
         Card second = player2.flip();
@@ -81,8 +84,9 @@ public class Game {
         warPile.clear();
     }
 
-    // War happens when there are ties. Each player burns 3 cards then go to war with the 4th.
-    // if a player does not have enough cards to go to war, they lose. 
+    // War happens when there is a tie. 
+    // Each player burns 3 cards then goes to war with the 4th.
+    // if a player does not have enough cards to go to war, they lose the game.
     public static void declareWar(){
         System.out.println("TIE! A WAR WILL START ");
 
@@ -101,6 +105,8 @@ public class Game {
             return;
         }
 
+
+        // both players have enough cards so war starts 
         System.out.println();
         System.out.println("---------- WAR START ----------");
 
@@ -110,7 +116,7 @@ public class Game {
             warPile.add(player2.flip());
         }
 
-
+        // War with next card.
         Game.flip();
         System.out.println("---------- WAR END ------------");
         System.out.println();

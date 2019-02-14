@@ -7,6 +7,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class Player {
     private Queue<Card> cards = new ArrayBlockingQueue<Card>(52);
 
+    // player who wins the war takes the warpile
     public void consumeWarPile(ArrayList<Card> warPile){
         for (Card c: warPile){
             cards.add(c);
