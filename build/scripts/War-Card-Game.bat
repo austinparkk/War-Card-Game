@@ -66,7 +66,7 @@ set CMD_LINE_ARGS=%*
 set CLASSPATH=%APP_HOME%\lib\War-Card-Game.jar
 
 @rem Execute War-Card-Game
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %WAR_CARD_GAME_OPTS%  -classpath "%CLASSPATH%" main.java.war.Game %CMD_LINE_ARGS%
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %WAR_CARD_GAME_OPTS%  -classpath "%CLASSPATH%" war.Game %CMD_LINE_ARGS%
 
 :end
 @rem End local scope for the variables with windows NT shell

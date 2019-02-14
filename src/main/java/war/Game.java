@@ -12,10 +12,8 @@ public class Game {
     // MAIN METHOD 
     public static void main(String[] args){
     
-        Deck deck = new Deck(Game.createDeck());
+        Deck<Card> deck = new Deck<Card>(Game.createDeck());
         
-        //shuffle twice for more randomness. 
-        deck.shuffle();
         deck.shuffle();
 
         player1 = new Player<Card>();
@@ -24,12 +22,16 @@ public class Game {
         // deal cards
         deck.deal(player1, player2);
 
+        System.out.println("--------------------GAME START---------------------");
+
         // game start! 
         while (player1.cardsLeft() > 0 && player2.cardsLeft() > 0){
             System.out.println("----------------------------------------------------------");
             System.out.println("PLAYER 1 HAS " + player1.cardsLeft() + " :: " + "PLAYER 2 HAS " + player2.cardsLeft());
             Game.flip();
         }
+
+        System.out.println("--------------------GAME END---------------------");
 
         if (player1.cardsLeft() == 0){
             System.out.println("PLAYER 2 WINS");
