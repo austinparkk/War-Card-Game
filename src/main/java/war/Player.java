@@ -14,6 +14,16 @@ public class Player {
         }
     }
 
+    public Queue<Card> getCards(){
+        return cards;
+    }
+
+    public void cutCards(){
+        for (int i = 0; i < cards.size()/2; i++){
+            addCard(cards.remove());
+        }
+    }
+
     public Boolean addCard(Card card){
         return cards.add(card);
     }

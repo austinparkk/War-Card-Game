@@ -4,15 +4,18 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private static Player player1 = new Player();
-    private static Player player2 = new Player();
+    private Player player1 = new Player();
+    private Player player2 = new Player();
+    private Deck deck;
 
-    private static ArrayList<Card> warPile = new ArrayList<>();
+    private ArrayList<Card> warPile = new ArrayList<>();
 
-    // MAIN METHOD 
-    public static void main(String[] args){
+    public Game(Deck deck){
+        this.deck = deck;
+    }
+
+    public void start(){
         // create a standard deck and shuffle before dealing
-        Deck deck = new Deck(Game.createDeck());
         deck.shuffle();
 
         // deal cards
@@ -20,15 +23,22 @@ public class Game {
 
         // game starts
         System.out.println("------------------------GAME START------------------------");
-        
+        int i = 0;
         while (player1.cardsLeft() > 0 && player2.cardsLeft() > 0){
             // print score before each round
+
             System.out.println("-----------------------------------------------------------");
             System.out.println("Player 1: " + player1.cardsLeft() + " left -- " + "Player 2: " + player2.cardsLeft() + " left");
             System.out.println();
-
+            if (i == 30){
+                //cut each players cards after 30 rounds to avoid infinite games. 
+                player1.cutCards();
+                player2.cutCards();
+                i = 0;
+            }
             // flip next card
-            Game.flip();
+            flip();
+            i++;
         }
 
         System.out.println();
@@ -43,27 +53,8 @@ public class Game {
 
  // --------------------------- HELPER FUNCTIONS -------------------------------
 
-    // creates a standard deck of 52 cards
-    public static ArrayList<Card> createDeck(){
-        ArrayList<Card> standardDeck = new ArrayList<Card>(52);
-    
-        for (int i = 1; i < 14; i++){
-            Card heart = new Card(Suit.HEART, Rank.getRank(i));
-            Card diamond = new Card(Suit.DIAMOND, Rank.getRank(i));
-            Card spade = new Card(Suit.SPADE, Rank.getRank(i));
-            Card club = new Card(Suit.CLUB, Rank.getRank(i));
-
-            standardDeck.add(heart);
-            standardDeck.add(diamond);
-            standardDeck.add(spade);
-            standardDeck.add(club);
-        }
-
-        return standardDeck;
-    }
-
     // Each player flips a card, the higher card wins and takes the pile. If its a tie, a war breaks out. 
-    public static void flip(){
+    public void flip(){
         Card first = player1.flip();
         Card second = player2.flip();
 
@@ -79,7 +70,7 @@ public class Game {
             System.out.println("PLAYER 2 WINS THE ROUND");
             player2.consumeWarPile(warPile);
         } else if (first.getRank().getValue() == second.getRank().getValue()){
-            Game.declareWar();
+            declareWar();
         }
         warPile.clear();
     }
@@ -87,7 +78,7 @@ public class Game {
     // War happens when there is a tie. 
     // Each player burns 3 cards then goes to war with the 4th.
     // if a player does not have enough cards to go to war, they lose the game.
-    public static void declareWar(){
+    public void declareWar(){
         System.out.println("TIE! A WAR WILL START ");
 
         // check that both players have enough cards to declare war. 
@@ -117,7 +108,7 @@ public class Game {
         }
 
         // War with next card.
-        Game.flip();
+        flip();
         System.out.println("---------- WAR END ------------");
         System.out.println();
     }

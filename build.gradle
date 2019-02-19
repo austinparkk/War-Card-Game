@@ -1,4 +1,22 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'war.Game'
+mainClassName = 'war.App'
+
+repositories {
+    mavenCentral()
+}
+ 
+dependencies {
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.4.0')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.0')
+}
+test {
+     testLogging {
+        // Make sure output from
+        // standard out or error is shown
+        // in Gradle output.
+        showStandardStreams = true
+     }
+    useJUnitPlatform()
+}
