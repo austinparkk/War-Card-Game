@@ -8,4 +8,4 @@ To run, navigate to project directory and use the following command in terminal:
 
 
 
-To get the executable file navigate to build/distributions/War-Card-Game/bin
+To get the executable file, unzip War-Card-Game.zip.
