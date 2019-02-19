@@ -2,7 +2,7 @@ package war;
 import java.util.ArrayList;
 public class App{
 
-
+// main method
     public static void main(String[] args){
         Game game = new Game(new Deck(createDeck()));
         game.start();
@@ -10,6 +10,7 @@ public class App{
 
 
 // ------------- HELPER FUNCTIONS --------------------------
+
      // creates a standard deck of 52 cards
      public static ArrayList<Card> createDeck(){
         ArrayList<Card> standardDeck = new ArrayList<Card>(52);

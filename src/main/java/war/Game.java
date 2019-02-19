@@ -26,16 +26,17 @@ public class Game {
         int i = 0;
         while (player1.cardsLeft() > 0 && player2.cardsLeft() > 0){
             // print score before each round
-
             System.out.println("-----------------------------------------------------------");
             System.out.println("Player 1: " + player1.cardsLeft() + " left -- " + "Player 2: " + player2.cardsLeft() + " left");
             System.out.println();
+
+            //cut each players cards after 30 rounds to avoid infinitely long games. 
             if (i == 30){
-                //cut each players cards after 30 rounds to avoid infinite games. 
                 player1.cutCards();
                 player2.cutCards();
                 i = 0;
             }
+
             // flip next card
             flip();
             i++;
