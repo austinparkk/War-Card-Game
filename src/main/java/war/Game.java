@@ -45,7 +45,9 @@ public class Game {
         System.out.println();
         System.out.println("-------------------------GAME END-------------------------");
 
-        if (player1.cardsLeft() == 0){
+        if (player1.cardsLeft() == 0 && player2.cardsLeft() == 0){
+            System.out.println("TIE");
+        }else if (player1.cardsLeft() == 0){
             System.out.println("PLAYER 2 WINS");
         } else {
             System.out.println("PLAYER 1 WINS");
